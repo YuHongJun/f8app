@@ -57,13 +57,18 @@ async function importObject(ClassType, attributes) {
 
 async function importClass(className) {
   console.log('Loading', className);
-  const response = await fetch(`https://api.parse.com/1/classes/${className}`, {
+  // const response = await fetch(`https://api.parse.com/1/classes/${className}`, {
+  const response = await fetch(`http://localhost:8080/parse/classes/${className}`, {
     method: 'get',
     headers: {
-      'X-Parse-Application-Id': 'R0yDMIKCUyEke2UiadcTBBGd1L5hMBTGJSdBNL3W',
-      'X-Parse-JavaScript-Key': 'BJ5V0APFMlvmCBPDXl9Mgh3q3dFrs18XkQz6A2bO',
+      'X-Parse-Application-Id': 'oss-f8-app-2016',
       'Content-Type': 'application/json'
     },
+    // headers: {
+    //   'X-Parse-Application-Id': 'R0yDMIKCUyEke2UiadcTBBGd1L5hMBTGJSdBNL3W',
+    //   'X-Parse-JavaScript-Key': 'BJ5V0APFMlvmCBPDXl9Mgh3q3dFrs18XkQz6A2bO',
+    //   'Content-Type': 'application/json'
+    // },
   });
   const {results} = await response.json();
   const ClassType = Parse.Object.extend(className);
@@ -87,7 +92,6 @@ async function createSurvey(session) {
 async function main() {
   await importClass('Speakers');
   var sessions = await importClass('Agenda');
-
   console.log('Generating sample survey questions');
   await new Parse.Query(Survey)
     .each(record => record.destroy());

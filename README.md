@@ -15,7 +15,7 @@ We've created a series of tutorials at [makeitopen.com](http://makeitopen.com/) 
 2. [CocoaPods](http://cocoapods.org) (only for iOS)
   - Version 1.0+ recommended (`gem install cocoapods --pre`)
 3. [MongoDB](https://www.mongodb.org/downloads) (needed to run Parse Server locally)
-
+ `brew install mongodb`
 ## Setup
 
 1. **Clone the repo**
@@ -37,7 +37,31 @@ We've created a series of tutorials at [makeitopen.com](http://makeitopen.com/) 
   ```
   $ lsof -iTCP:27017 -sTCP:LISTEN
   ```
-
+    My Issue 1:
+    ```
+    WARNING: Access control is not enabled for the database.
+    Read and write access to data and configuration is unrestricted.
+    ```
+    solve this problem by these steps:
+    ```
+     1. download https://github.com/ReactWindows/f8app/blob/data/mongodb/db.zip
+        I put it in mongodb folder in the project
+     2. install mongoDB by:
+        brew install mongodb
+     3. start mongoDB server by:
+        mongod --dbpath YOURDATAPATH //the path you just downLoaded
+     4. start mongoDB client by:
+        mongo
+        > show dbs
+        > show users
+        > use admin
+        > db.createUser({user:'root',pwd:'password',roles:['root']})
+        > db.auth('root','password')
+        > db.system.users.find().acount()
+        > use dev
+        > show collections
+        > db.FAQ.find()
+    ```  
   NOTE: if installed with [Homebrew](http://brew.sh/) run `brew info mongo` and
   check out the Caveats section.
 
@@ -51,6 +75,7 @@ We've created a series of tutorials at [makeitopen.com](http://makeitopen.com/) 
 
   ```
   $ npm start
+  $ react-native start
   ```
 
 5. **Import sample data** (the local Parse Server should be running):
@@ -79,10 +104,23 @@ We've created a series of tutorials at [makeitopen.com](http://makeitopen.com/) 
 7. **Running on iOS:**
 
   ```
+  $ react-native start
   $ react-native run-ios
   ```
 
 ## Troubleshooting
+```
+1. mongod --dbpath /Users/yuhongjun/reactNativeWorkSpace/mongodb/data
+2. mongo 
+    switch admin
+    show users
+    switch test
+    db.auth('test')
+3. npm start
+4. react-native start
+5. react-native run-ios
+```
+
 
 > Could not connect to development server
 
